@@ -13,4 +13,6 @@ def get_example_data_file_path(filename, data_dir='example_data'):
 
 
 def load_data(data_file):
-    return pd.read_csv(data_file, sep=' ')
+    input_file = pd.read_csv(data_file, sep=' ')
+    output_data = input_file.to_xarray()
+    return output_data
