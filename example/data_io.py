@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+import xarray as xr
 
 
 def get_example_data_file_path(filename, data_dir='example_data'):
@@ -13,6 +14,11 @@ def get_example_data_file_path(filename, data_dir='example_data'):
 
 
 def load_data(data_file):
-    input_file = pd.read_csv(data_file, sep=' ')
-    output_data = input_file.to_xarray()
+    if str(data_file).endswith('.txt'):
+        input_file = pd.read_csv(data_file, sep=' ')
+        output_data = input_file.to_xarray()
+    elif str(data_file).endswith('.nc'):
+        output_data = xr.open_dataset(data_file)
+    else:
+        raise TypeError('file must be a text or NetCDF file')
     return output_data
