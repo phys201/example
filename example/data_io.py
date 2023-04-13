@@ -4,12 +4,13 @@ import xarray as xr
 
 
 def get_example_data_file_path(filename, data_dir='example_data'):
-    # Path.cwd() returns the location of the source file currently in use (so
-    # in this case io.py). We can use it as base path to construct
-    # other paths from that should end up correct on other machines or
-    # when the package is installed
-    current_directory = Path.cwd()
-    data_path = Path(current_directory, data_dir, filename)
+    # Path(__file__).resolve() returns the absolute path of the current module.
+    # __file__ is a special variable path of the current file (here
+    # data_io.py). We can use it as base path to construct other paths
+    # that should end up correct on other machines or when the package is
+    # installed
+    module_directory = Path(__file__).resolve().parent
+    data_path = Path(module_directory, data_dir, filename)
     return data_path
 
 
